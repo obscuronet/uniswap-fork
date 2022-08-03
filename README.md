@@ -87,6 +87,6 @@
    ```
 
 7. Update the `@uniswap/smart-order-router` entry in `interface/package.json` to point to the smart-order-router `.tgz` 
-   file in the `smart-order-router` folder created in the preceding step
+   file created by the preceding step in the `smart-order-router` folder
 
 8. `cd interface && yarn --update-checksums && yarn && yarn start; cd ..`
