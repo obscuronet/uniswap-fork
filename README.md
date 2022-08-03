@@ -32,8 +32,7 @@
    ```
    cd tools/walletextension/main \
    && go build -o wallet_extension \
-   && ./wallet_extension -nodeHost 127.0.0.1 -nodePortHTTP 13000 -nodePortWS 13001 -port 3001 \
-   ; cd ../../..
+   && ./wallet_extension -nodeHost 127.0.0.1 -nodePortHTTP 13000 -nodePortWS 13001 -port 3001
    ```
 
 3. From the root of the `uniswap-fork` repo, deploy the token contracts:
@@ -61,7 +60,7 @@
 4. From the `deploy-v3/` folder of the `uniswap-fork` repo, deploy Uniswap contracts with WETH:
 
    ```
-   rm state.json; yarn start -pk 0xf52e5418e349dccdda29b6ac8b0abe6576bb7713886aa85abea6181ba731f9bb -j http://127.0.0.1:9000/ -w9 0xeDa66Cc53bd2f26896f6Ba6b736B1Ca325DE04eF -ncl ETH -o 0x13E23Ca74DE0206C56ebaE8D51b5622EFF1E9944
+   cd deploy-v3 && rm state.json; yarn start -pk 0xf52e5418e349dccdda29b6ac8b0abe6576bb7713886aa85abea6181ba731f9bb -j http://127.0.0.1:9000/ -w9 0xeDa66Cc53bd2f26896f6Ba6b736B1Ca325DE04eF -ncl ETH -o 0x13E23Ca74DE0206C56ebaE8D51b5622EFF1E9944
    export const GETH_NETWORK_V3_CORE_FACTORY_ADDRESSES = '0x5b8b9160C4C2084cd8dDA7B4E2428C231cf29E7d'
    export const GETH_NETWORK_V3_ROUTER_ADDRESS = '0x1c43BC172e9021BB90C36C26A0c46868B26f5708'
    export const GETH_NETWORK_V3_MIGRATOR_ADDRESSES = '0x5F9626e345718582fF1F33B23A80B712F77C0829'
@@ -73,6 +72,7 @@
    export const GETH_NETWORK_DAI_ADDRESS = '0x6d2994ACb911CFceaeE6C36D881cbDFE2F9553B0'
    export const GETH_NETWORK_USDC_ADDRESS = '0xC2b0dEa419f6596B259c5bEbEE43aC044Bbb2EA1'
    export const GETH_NETWORK_WETH_ADDRESS = '0x51D43a3Ca257584E770B6188232b199E76B022A2'
+   cd ..
    ```
 
 5. Update the constants in the following files:
@@ -80,6 +80,13 @@
    * `interface/src/geth_network.ts`
    * `smart-order-router/src/geth_network.ts`
 
-7. `cd smart-order-router && npm run build && npm pack @ smart-router; cd ..`
+6. Build the smart-order-router package:
 
-8. `cd interface && yarn && yarn start; cd ..`
+   ```
+   cd smart-order-router && npm install && npm run build && npm pack; cd ..
+   ```
+
+7. Update the `@uniswap/smart-order-router` entry in `interface/package.json` to point to the smart-order-router `.tgz` 
+   file in the `smart-order-router` folder created in the preceding step
+
+8. `cd interface && yarn --update-checksums && yarn && yarn start; cd ..`
