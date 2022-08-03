@@ -2,9 +2,11 @@
 
 ## Pre-requisites
 
-* Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-* Install [Yarn](https://yarnpkg.com/getting-started/install)
+* Install the following:
+  * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+  * [Yarn](https://yarnpkg.com/getting-started/install)
+  * [ncc](https://github.com/vercel/ncc)
+  * [Hardhat](https://hardhat.org/)
 
 * Install ncc:
 
@@ -29,15 +31,19 @@
    && ./start-obscuro-node.sh --sgx_enabled=false --host_id=0x0000000000000000000000000000000000000001 --l1host=gethnetwork --mgmtcontractaddr=0xeDa66Cc53bd2f26896f6Ba6b736B1Ca325DE04eF --obxerc20addr=0xC0370e0b5C1A41D447BDdA655079A1B977C71aA9 --etherc20addr=0x51D43a3Ca257584E770B6188232b199E76B022A2 --is_genesis=true
    ```
 
-2. From the `tools/walletextension/main/` folder of the `go-obscuro` repo, run the following commands to build and run 
-   the wallet extension:
+2. From the `tools/walletextension/main/` folder of the `go-obscuro` repo, build and run the wallet extension:
 
    ```
-   go build -o wallet_extension
-   ./wallet_extension -nodeHost 127.0.0.1 -nodePortHTTP 13000 -nodePortWS 13001
+   go build -o wallet_extension && ./wallet_extension -nodeHost 127.0.0.1 -nodePortHTTP 13000 -nodePortWS 13001 -port 3001
    ```
 
-3. Deploy the tokens
+3. From the `erc20deployer/` folder of the `uniswap-fork` repo, deploy the token contracts:
+
+   ```
+   npx hardhat test
+   ```
+   
+   The token contracts will be available at the following addresses:
 
    ```
    Owner Address of tokens: 
@@ -53,7 +59,7 @@
    0x6d2994ACb911CFceaeE6C36D881cbDFE2F9553B0
    ```
 
-4. From the `deploy-v3/` folder of the `uniswap-fork` repo, deploy Uniswap contracts with WETH:
+5. From the `deploy-v3/` folder of the `uniswap-fork` repo, deploy Uniswap contracts with WETH:
 
    ```
    rm state.json; yarn start -pk 0xf52e5418e349dccdda29b6ac8b0abe6576bb7713886aa85abea6181ba731f9bb -j http://127.0.0.1:9000/ -w9 0xeDa66Cc53bd2f26896f6Ba6b736B1Ca325DE04eF -ncl ETH -o 0x13E23Ca74DE0206C56ebaE8D51b5622EFF1E9944
@@ -70,8 +76,8 @@
    export const GETH_NETWORK_WETH_ADDRESS = '0x51D43a3Ca257584E770B6188232b199E76B022A2'
    ```
 
-5. Update interface + smart-router geth constants file
+6. Update interface + smart-router geth constants file
 
-6. `npm run build && npm pack @ smart-router`
+7. `npm run build && npm pack @ smart-router`
 
-7. `yarn && yarn start`
+8. `yarn && yarn start`
