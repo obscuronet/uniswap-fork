@@ -8,12 +8,6 @@
   * [ncc](https://github.com/vercel/ncc)
   * [Hardhat](https://hardhat.org/)
 
-* Install ncc:
-
-  ```
-  yarn add @vercel/ncc
-  ```
-
 * From the `testnet/` folder of the `go-obscuro` repo, build the required Docker images:
 
   ```
